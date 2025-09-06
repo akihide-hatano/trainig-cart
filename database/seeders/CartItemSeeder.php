@@ -16,7 +16,7 @@ class CartItemSeeder extends Seeder
         CartItem::create([
             'cart_id'    => 1,     // CartSeederで作ったカート
             'product_id' => 1,     // ProductSeederで入れた商品
-            'qty'        => 2,
+            'quantity'        => 2,
             'unit_price' => 180,   // ProductSeederの価格に合わせる
         ]);
     }
