@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,9 +21,16 @@ Route::middleware('auth')->group(function () {
 
     //カートのCRUD操作
     Route::get('/cart',[CartController::class,'index'])->name('cart.index');
-    Route::get('/cart',[CartController::class,'show'])->name('cart.show');
-    Route::get('/cart/{item}',[CartController::class,'update'])->name('cart.update');
-    Route::get('/cart/{item}',[CartController::class,'destroy'])->name('cart.destroy');
+    Route::post('/cart',[CartController::class,'store'])->name('cart.store');
+    Route::patch('/cart/{item}',[CartController::class,'update'])->name('cart.update');
+    Route::delete('/cart/{item}',[CartController::class,'destroy'])->name('cart.destroy');
+
+    //カートのCRUD操作
+    Route::get('/product',[ProductController::class,'index'])->name('product.index');
+    Route::post('/product',[ProductController::class,'store'])->name('product.store');
+    Route::patch('/product/{item}',[ProductController::class,'update'])->name('product.update');
+    Route::delete('/product/{item}',[ProductController::class,'destroy'])->name('product.destroy');
+
 });
 
 
