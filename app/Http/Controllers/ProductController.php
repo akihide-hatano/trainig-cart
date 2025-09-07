@@ -19,6 +19,10 @@ class ProductController extends Controller
         return view('products.show', compact('product'));
     }
 
+    public function create(Product $product){
+        return view('products.create');
+    }
+
     public function store(Request $request){
         //Validation
         $validated = $request->validate([
@@ -27,7 +31,6 @@ class ProductController extends Controller
             'price' => 'required|integer|min:0',
             'image' => 'nullable|url',
         ]);
-
         //dataの登録
         try{
             Product::create($validated);
