@@ -20,10 +20,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //カートのCRUD操作
-    Route::get('/cart',[CartController::class,'index'])->name('cart.index');
-    Route::post('/cart',[CartController::class,'store'])->name('cart.store');
-    Route::patch('/cart/{item}',[CartController::class,'update'])->name('cart.update');
-    Route::delete('/cart/{item}',[CartController::class,'destroy'])->name('cart.destroy');
+    Route::get('/carts',[CartController::class,'index'])->name('cart.index');
+    Route::get('/carts/create',[CartController::class,'create'])->name('cart.create');
+    Route::post('/carts',[CartController::class,'store'])->name('cart.store');
+    Route::get('/carts/{cart}',[CartController::class,'show'])->name('cart.show');
+    Route::patch('/carts/{cart}',[CartController::class,'update'])->name('cart.update');
+    Route::get('carts/{cart}/edit', [CartController::class, 'edit'])->name('cart.edit');
+    Route::delete('/carts/{cart}',[CartController::class,'destroy'])->name('cart.destroy');
 
     //ProductsのCRUD操作
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
