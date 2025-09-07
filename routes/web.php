@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartItemController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/carts/{cart}',[CartController::class,'update'])->name('cart.update');
     Route::get('carts/{cart}/edit', [CartController::class, 'edit'])->name('cart.edit');
     Route::delete('/carts/{cart}',[CartController::class,'destroy'])->name('cart.destroy');
+
+    // 💡 CartItemのCRUD操作ルート
+    Route::post('/cart/items', [CartItemController::class, 'store'])->name('cart.items.store');
+    Route::patch('/cart/items/{item}', [CartItemController::class, 'update'])->name('cart.items.update');
+    Route::delete('/cart/items/{item}', [CartItemController::class, 'destroy'])->name('cart.items.destroy');
 
     //ProductsのCRUD操作
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
