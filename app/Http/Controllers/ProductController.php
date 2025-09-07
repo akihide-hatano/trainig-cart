@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index(){
         $products = Product::all();
-          return view('products.index', compact('products'));
+        return view('products.index', compact('products'));
     }
 
     public function show(Product $product){
@@ -42,5 +42,25 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')
                             ->with('message','商品が正常に登録されました');
+    }
+
+    public function edit(Product $product){
+        return view('products.edit',compact('product'));
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|integer|min:0',
+            'image' => 'nullable|url',
+        ]);
+
+        // 💡 既存のデータを更新
+        $product->update($validated);
+
+        return redirect()->route('products.show', $product)
+                        ->with('message', '商品情報が正常に更新されました。');
     }
 }
