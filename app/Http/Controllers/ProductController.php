@@ -71,9 +71,15 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        // 💡 商品を削除
-        $product->delete();
-
+        try{
+            //データベースから商品を削除
+            $product->delete();
+        }
+        catch(\Exception $e){
+            //削除失敗の処理
+            return back()->with('error', '商品の削除に失敗しました。もう一度お試しください。');
+        }
+        //削除成功時にリダイレクト
         return redirect()->route('products.index')
                         ->with('message', '商品が正常に削除されました。');
     }
