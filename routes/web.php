@@ -25,10 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/cart/{item}',[CartController::class,'update'])->name('cart.update');
     Route::delete('/cart/{item}',[CartController::class,'destroy'])->name('cart.destroy');
 
-    //カートのCRUD操作
+    //ProductsのCRUD操作
     Route::get('/product',[ProductController::class,'index'])->name('product.index');
-    Route::post('/product',[ProductController::class,'store'])->name('product.store');
+    Route::get('/product/{item}',[ProductController::class,'show'])->name('product.show');
+    Route::post('/product/{item}',[ProductController::class,'store'])->name('product.store');
     Route::patch('/product/{item}',[ProductController::class,'update'])->name('product.update');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::get('/products/{item}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::delete('/product/{item}',[ProductController::class,'destroy'])->name('product.destroy');
 
 });

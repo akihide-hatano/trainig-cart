@@ -12,7 +12,6 @@ class CartController extends Controller
      */
     public function index()
     {
-        // TODO: ログインユーザーのカート情報を取得し、ビューに渡す
         return view('cart.index');
     }
 
