@@ -50,16 +50,21 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        //validationの実施
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|integer|min:0',
             'image' => 'nullable|url',
         ]);
-
-        // 💡 既存のデータを更新
-        $product->update($validated);
-
+        //databaseの登録
+        try{
+            $product->updated($validated);
+        }
+        catch(\Exception $e){
+            // 登録失敗時の処理（例：ログ出力やエラーメッセージのリダイレクト）
+            return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
+        }
         return redirect()->route('products.show', $product)
                         ->with('message', '商品情報が正常に更新されました。');
     }
