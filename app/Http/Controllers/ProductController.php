@@ -68,4 +68,13 @@ class ProductController extends Controller
         return redirect()->route('products.show', $product)
                         ->with('message', '商品情報が正常に更新されました。');
     }
+
+    public function destroy(Product $product)
+    {
+        // 💡 商品を削除
+        $product->delete();
+
+        return redirect()->route('products.index')
+                        ->with('message', '商品が正常に削除されました。');
+    }
 }
