@@ -18,14 +18,14 @@ class CartItemController extends Controller
                 ->where('user_id',Auth::id())
                 ->get();
 
-        dd($items);
+        // dd($items);
 
         $total = 0;
         foreach($items as $i){
             $total += (int)$i->product->price * (int)$i->quantity;
         }
 
-        return view('carts.index', compact('items', 'total'));
+        return view('cart.index', compact('items', 'total'));
     }
 
     /**
