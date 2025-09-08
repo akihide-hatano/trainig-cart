@@ -72,6 +72,19 @@ class CartItemController extends Controller
     }
 
     /**
+     * カート内のアイテム編集フォームを表示する (練習用)
+     *
+     * @param  \App\Models\CartItem  $item
+     */
+    public function edit(CartItem $item)
+    {
+        // 自分のカートアイテム以外は拒否
+        abort_if($item->user_id !== Auth::id(), 403);
+        return view('cart.edit', compact('item'));
+    }
+
+
+    /**
      * カート内の商品の数量を更新する
      *
      * @param  \Illuminate\Http\Request  $request
@@ -101,6 +114,20 @@ class CartItemController extends Controller
 
         $item->update(['quantity' => (int)$data['quantity']]);
         return back()->with('success', '数量を更新しました。');
+    }
+
+    /**
+     * カートから商品を削除する
+     *
+     * @param  \App\Models\CartItem  $item
+     */
+    public function destroy(CartItem $item)
+    {
+        // 自分のカートアイテム以外は拒否
+        abort_if($item->user_id !== Auth::id(), 403);
+
+        $item->delete();
+        return back()->with('success', '商品がカートから削除されました。');
     }
 }
 ?>
