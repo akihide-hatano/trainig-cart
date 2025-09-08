@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartItemController;
 use App\Models\Product;
@@ -20,16 +19,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //カートのCRUD操作
-    Route::get('/carts',[CartController::class,'index'])->name('cart.index');
-    Route::get('/carts/create',[CartController::class,'create'])->name('cart.create');
-    Route::post('/carts',[CartController::class,'store'])->name('cart.store');
-    Route::get('/carts/{cart}',[CartController::class,'show'])->name('cart.show');
-    Route::patch('/carts/{cart}',[CartController::class,'update'])->name('cart.update');
-    Route::get('carts/{cart}/edit', [CartController::class, 'edit'])->name('cart.edit');
-    Route::delete('/carts/{cart}',[CartController::class,'destroy'])->name('cart.destroy');
-
-    // 💡 CartItemのCRUD操作ルート
+    // 💡 CartItemのルーティングをすべて定義
+    Route::get('/cart', [CartItemController::class, 'index'])->name('cart.index');
+    Route::get('/cart/{item}', [CartItemController::class, 'show'])->name('cart.show');
+    Route::get('/cart/{item}/edit', [CartItemController::class, 'edit'])->name('cart.edit');
     Route::post('/cart/items', [CartItemController::class, 'store'])->name('cart.items.store');
     Route::patch('/cart/items/{item}', [CartItemController::class, 'update'])->name('cart.items.update');
     Route::delete('/cart/items/{item}', [CartItemController::class, 'destroy'])->name('cart.items.destroy');
