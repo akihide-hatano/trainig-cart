@@ -27,7 +27,9 @@
                     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         @foreach($items as $item)
                             <article class="flex gap-4 p-3 border border-gray-200 rounded-xl">
-                                <img src="{{ $item->product->image ?? '' }}" alt="{{ $item->product->name }}" class="w-8 h-8 md:w-12 md:h-12 object-cover rounded-lg bg-gray-100">
+                            <div class="flex-shrink-0 w-24 h-24 md:w-20 md:h-20">
+                                <img src="{{ $item->product->image ?? '' }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover rounded-lg bg-gray-100">
+                            </div>
                                 <div class="flex-1">
                                     <div class="font-bold mb-1">{{ $item->product->name }}</div>
                                     <div class="text-gray-600 text-sm">単価：{{ number_format((int)$item->product->price) }} 円</div>
