@@ -18,12 +18,14 @@ class CartItemController extends Controller
                 ->where('user_id',Auth::id())
                 ->get();
 
+        dd($items);
+
         $total = 0;
         foreach($items as $i){
             $total += (int)$i->product->price * (int)$i->quantity;
         }
 
-        return view('cart.index', compact('items', 'total'));
+        return view('carts.index', compact('items', 'total'));
     }
 
     /**
@@ -65,7 +67,6 @@ class CartItemController extends Controller
             'quantity' => 'カートに追加できる商品の合計数量は99個までです。',
             ]);
         }
-        
         $item->quantity = $newQuantity;
         $item->save();
         return back()->with('success', '商品をカートに追加しました。');
