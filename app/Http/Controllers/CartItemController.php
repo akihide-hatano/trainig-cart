@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CartItem;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class CartItemController extends Controller
 {
@@ -63,13 +64,10 @@ class CartItemController extends Controller
             throw ValidationException::withMessages([
             'quantity' => 'カートに追加できる商品の合計数量は99個までです。',
             ]);
-        }else{
-            $item->quantity = $newQuantity;
         }
-
-
+        
+        $item->quantity = $newQuantity;
         $item->save();
-
         return back()->with('success', '商品をカートに追加しました。');
     }
 }
