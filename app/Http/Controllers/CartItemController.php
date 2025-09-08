@@ -19,8 +19,9 @@ class CartItemController extends Controller
                 ->where('user_id',Auth::id())
                 ->get();
 
-        // dd($items);
-        $products = Product::all();
+        // productsの3件最新のものをとる
+        $products = Product::latest()->take(3)->get();
+
 
         $total = 0;
         foreach($items as $i){

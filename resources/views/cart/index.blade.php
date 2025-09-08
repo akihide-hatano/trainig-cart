@@ -110,33 +110,40 @@
             </div>
           @endif
 
-          {{-- ③ 新着 / おすすめ商品（※ カートforeachの外に配置） --}}
-          @if(!empty($products) && $products->isNotEmpty())
-            <div class="mt-10">
+        {{-- ③ 新着 / おすすめ商品（※ カートforeachの外に配置） --}}
+        @if(!empty($products) && $products->isNotEmpty())
+        <div class="mt-10">
             <h3 class="text-lg font-semibold mb-3">新着商品</h3>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($products as $product)
-                <div class="border rounded-lg overflow-hidden shadow-sm">
-                    <img src="{{ $product->image ?? 'https://via.placeholder.com/600x400' }}"
-                        alt="{{ $product->name }}" class="w-full h-48 object-cover">
-                    <div class="p-4">
-                        <h4 class="text-base font-semibold">{{ $product->name }}</h4>
-                            <p class="text-gray-600 mt-1">¥{{ number_format($product->price) }}</p>
-                            <form action="{{ route('cart.items.store') }}" method="POST" class="mt-4">
-                                    @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <button type="submit"
-                                        class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition">
-                                カートに追加
-                                </button>
-                            </form>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ($products as $product)
+                <div class="border rounded-lg overflow-hidden shadow-sm flex flex-col">
+                {{-- 画像：カード幅に応じた完全な正方形 --}}
+                <div class="w-full aspect-square bg-gray-100 overflow-hidden">
+                    <img
+                    src="{{ $product->image ?? 'https://via.placeholder.com/400x400' }}"
+                    alt="{{ $product->name }}"
+                    class="w-full h-full object-cover"  {{-- 切り抜きOK。切り抜きNGなら object-contain --}}
+                    >
                 </div>
-                @endforeach
-            </div>
-            </div>
-        @endif
+                {{-- 本文 --}}
+                <div class="p-4 flex flex-col gap-2">
+                    <h4 class="text-base font-semibold">{{ $product->name }}</h4>
+                    <p class="text-gray-600">¥{{ number_format($product->price) }}</p>
 
+                    <form action="{{ route('cart.items.store') }}" method="POST" class="mt-2">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <button type="submit"
+                            class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition">
+                        カートに追加
+                    </button>
+                    </form>
+                </div>
+                </div>
+            @endforeach
+            </div>
+        </div>
+        @endif
         </div>
         </div>
     </div>
