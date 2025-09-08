@@ -60,7 +60,9 @@ class CartItemController extends Controller
 
         //数値が99を超えないように制限
         if($newQuantity > 99){
-            $item->quantity = 99;
+            throw ValidationException::withMessages([
+            'quantity' => 'カートに追加できる商品の合計数量は99個までです。',
+            ]);
         }else{
             $item->quantity = $newQuantity;
         }
