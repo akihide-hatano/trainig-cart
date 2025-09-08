@@ -149,28 +149,6 @@
     </div>
   </div>
 
-  {{-- 数量±の自動送信（JSが無効でも「更新」ボタンで動作） --}}
-  @push('scripts')
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.stepper-form').forEach(form => {
-        const input = form.querySelector('input[name="quantity"]');
-        const inc   = form.querySelector('.js-inc');
-        const dec   = form.querySelector('.js-dec');
+@vite('resources/js/cart.js')
 
-        const clamp = v => Math.max(0, Math.min(99, parseInt(v || '0', 10)));
-
-        inc?.addEventListener('click', () => {
-          input.value = clamp((parseInt(input.value || '0', 10) + 1));
-          form.submit();
-        });
-
-        dec?.addEventListener('click', () => {
-          input.value = clamp((parseInt(input.value || '0', 10) - 1));
-          form.submit();
-        });
-      });
-    });
-  </script>
-  @endpush
 </x-app-layout>
