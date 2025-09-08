@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CartItem;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
@@ -19,13 +20,14 @@ class CartItemController extends Controller
                 ->get();
 
         // dd($items);
+        $products = Product::all();
 
         $total = 0;
         foreach($items as $i){
             $total += (int)$i->product->price * (int)$i->quantity;
         }
 
-        return view('cart.index', compact('items', 'total'));
+        return view('cart.index', compact('items', 'total','products'));
     }
 
     /**
