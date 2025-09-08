@@ -54,7 +54,7 @@ class CartItemController extends Controller
 
         $item = CartItem::firstOrNew([
             'user_id'=>Auth::id(),
-            'prodict_id'=>$data['product_id'],
+            'product_id'=>$data['product_id'],
         ]);
 
         //数値の計算を変更しました
@@ -86,7 +86,6 @@ class CartItemController extends Controller
         abort_if($item->user_id !== Auth::id(), 403);
         return view('cart.edit', compact('item'));
     }
-
 
     /**
      * カート内の商品の数量を更新する
