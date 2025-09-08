@@ -70,5 +70,37 @@ class CartItemController extends Controller
         $item->save();
         return back()->with('success', '商品をカートに追加しました。');
     }
+
+    /**
+     * カート内の商品の数量を更新する
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\CartItem  $item
+     */
+    public function update(Request $request,CartItem $item){
+        // 自分のカートアイテム以外は拒否
+        abort_if($item->user_id !== Auth::id(), 403);
+
+        $data = $request->validate([
+            'quantity' => ['required', 'integer', 'min:0', 'max:99'],
+        ]);
+
+        //quantityが0の場合消す
+        if((int)$data['quantity'] === 0){
+            $item->delete();
+            return back()->with('success', '商品をカートから削除しました。');
+        }
+
+        //quantityっていう部分で99以上
+        if ((int)$data['quantity'] > 99) {
+            // バリデーションエラーを投げる
+            throw ValidationException::withMessages([
+                'quantity' => '数量は99個までです。'
+            ]);
+        }
+
+        $item->update(['quantity' => (int)$data['quantity']]);
+        return back()->with('success', '数量を更新しました。');
+    }
 }
 ?>
