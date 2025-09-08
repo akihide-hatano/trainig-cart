@@ -14,6 +14,7 @@ class CartItemSeeder extends Seeder
     public function run(): void
     {
         CartItem::create([
+            'user_id' => 1,
             'product_id' => 1,     // ProductSeederで入れた商品
             'quantity'        => 2,
             'unit_price' => 180,   // ProductSeederの価格に合わせる
