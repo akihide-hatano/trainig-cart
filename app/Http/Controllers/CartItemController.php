@@ -42,38 +42,46 @@ class CartItemController extends Controller
         return view('cart.show',compact('item'));
     }
 
-    /**
-     * カートに新しい商品を追加する
-     */
-    public function store(Request $request){
-        $data = $request->validate([
-            'product_id'=>['required','integer','exists:products,id'],
-            'quantity' => ['nullable', 'integer', 'min:1', 'max:99'],
-            ]);
-        $qty = $data['quantity'] ?? 1;
+/**
+ * カートに新しい商品を追加する
+ */
+public function store(Request $request)
+{
+    $data = $request->validate([
+        'product_id' => ['required','integer','exists:products,id'],
+        'quantity'   => ['nullable','integer','min:1','max:99'],
+    ]);
+    $qty = $data['quantity'] ?? 1;
 
-        $item = CartItem::firstOrNew([
-            'user_id'=>Auth::id(),
-            'product_id'=>$data['product_id'],
-        ]);
+    // 追加する商品の現在価格を取得
+    $product = Product::findOrFail($data['product_id']);
 
-        //数値の計算を変更しました
-        if($item->exists){
-            $newQuantity = $item->quantity + $qty;
-        }else{
-            $newQuantity = $qty;
-        }
+    // ユーザー×商品で既存を探す。なければ新規作成（保存までしてくれる）
+    $item = CartItem::firstOrCreate(
+        [
+            'user_id'    => Auth::id(),
+            'product_id' => $product->id,
+        ],
+        [
+            'unit_price' => (int) $product->price,
+            'quantity'   => 0,  // 新規作成時の初期値
+        ]
+    );
 
-        //数値が99を超えないように制限
-        if($newQuantity > 99){
-            throw ValidationException::withMessages([
+    // 数量を加算して最大 99 に制限
+    $newQuantity = $item->quantity + $qty;
+    if ($newQuantity > 99) {
+        throw \Illuminate\Validation\ValidationException::withMessages([
             'quantity' => 'カートに追加できる商品の合計数量は99個までです。',
-            ]);
-        }
-        $item->quantity = $newQuantity;
-        $item->save();
-        return back()->with('success', '商品をカートに追加しました。');
+        ]);
     }
+
+    $item->update(['quantity' => $newQuantity]);
+
+    return back()->with('success', '商品をカートに追加しました。');
+}
+
+
 
     /**
      * カート内のアイテム編集フォームを表示する (練習用)

@@ -27,14 +27,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/cart/items/{item}', [CartItemController::class, 'update'])->name('cart.items.update');
     Route::delete('/cart/items/{item}', [CartItemController::class, 'destroy'])->name('cart.items.destroy');
 
-    //ProductsのCRUD操作
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-    Route::get('/products',[ProductController::class,'index'])->name('products.index');
-    Route::get('/products/{item}',[ProductController::class,'show'])->name('products.show');
-    Route::post('/products/{item}',[ProductController::class,'store'])->name('products.store');
-    Route::patch('/products/{item}',[ProductController::class,'update'])->name('products.update');
-    Route::get('/products/{item}/edit', [ProductController::class, 'edit'])->name('products.edit');
-    Route::delete('/products/{item}',[ProductController::class,'destroy'])->name('product.destroy');
+    // index / create / store / show / edit / update / destroy
+    Route::get   ('/products',              [ProductController::class, 'index'])->name('products.index');
+    Route::get   ('/products/create',       [ProductController::class, 'create'])->name('products.create');
+    Route::post  ('/products',              [ProductController::class, 'store'])->name('products.store');
+    Route::get   ('/products/{product}',    [ProductController::class, 'show'])->name('products.show');
+    Route::get   ('/products/{product}/edit',[ProductController::class, 'edit'])->name('products.edit');
+    Route::patch ('/products/{product}',    [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}',    [ProductController::class, 'destroy'])->name('products.destroy');
 
 });
 
