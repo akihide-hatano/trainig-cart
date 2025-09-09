@@ -151,7 +151,45 @@ public function store(Request $request)
                 ->where('user_id',$userId)
                 ->lockForUpdate()
                 ->get();
+
+            if($items->isEmpty()){
+                abort(400,'カートが空です');
+            }
+
+            //合計計算
+            $total = 0;
+            foreach($items as $ci){
+                $unit = $ci->unit_price ?? (int)$ci->product->price;
+                $total += $unit * $ci->quantity;
+            }
+
+            // 注文作成
+            $order = Order::create([
+                'user_id'      => $userId,
+                'total_amount' => $total,
+                'status'       => 'paid',   // 外部決済なら pending にする
+                'placed_at'    => now(),
+            ]);
+
+            //明細作成
+            foreach($items as $ci){
+                $order->items()->create([
+                    'product_id' => $ci->product_id,
+                    'unit_price' =>$ci->unit_price ?? (int)$ci->product->price,
+                    'quantity' =>$ci->quantity,
+                    'subtotal' => ($ci->unit_price ?? (int)$ci->product->price) * $ci->quantity,
+                ]);
+            }
+            //カートを空にする
+            CartItem::where('user_id',$userId)->delete();
+
+            //returnで定義
+            return $order;
         });
+
+        //トランザクションを抜けても$orderを使えるように
+        return redirect()->route('order.show',$order)
+                        ->with('success','ご注文が覚醒しました。');
     }
 }
 ?>
