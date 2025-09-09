@@ -17,9 +17,9 @@ class Order extends Model
     ];
 
     protected $casts =[
-        'usr_id' => 'integer',
+        'user_id' => 'integer',
         'total_amount' => 'integer',
-        'place_at' => 'datetime',
+        'placed_at' => 'datetime',
     ];
 
     /**
@@ -36,5 +36,9 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getCalculatedTotalAttribute(){
+        return $this->items->sum('subtotal');
     }
 }
