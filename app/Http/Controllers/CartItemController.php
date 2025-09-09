@@ -7,6 +7,7 @@ use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\DB;
 
 class CartItemController extends Controller
 {
@@ -81,8 +82,6 @@ public function store(Request $request)
     return back()->with('success', '商品をカートに追加しました。');
 }
 
-
-
     /**
      * カート内のアイテム編集フォームを表示する (練習用)
      *
@@ -139,6 +138,20 @@ public function store(Request $request)
 
         $item->delete();
         return back()->with('success', '商品がカートから削除されました。');
+    }
+
+    // checkout機能を確認する
+    public function checkout()
+    {
+        $userId = Auth::id();
+
+        DB::transaction(function() use($userId){
+
+            $items = CartItem::with('product')
+                ->where('user_id',$userId)
+                ->lockForUpdate()
+                ->get();
+        });
     }
 }
 ?>
