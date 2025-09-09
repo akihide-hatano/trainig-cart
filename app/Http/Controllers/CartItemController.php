@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
@@ -145,7 +146,7 @@ public function store(Request $request)
     {
         $userId = Auth::id();
 
-        DB::transaction(function() use($userId){
+        $order = DB::transaction(function() use($userId){
 
             $items = CartItem::with('product')
                 ->where('user_id',$userId)
@@ -188,7 +189,7 @@ public function store(Request $request)
         });
 
         //トランザクションを抜けても$orderを使えるように
-        return redirect()->route('order.show',$order)
+        return redirect()->route('orders.show',$order)
                         ->with('success','ご注文が覚醒しました。');
     }
 }
