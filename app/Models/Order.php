@@ -17,6 +17,7 @@ class Order extends Model
     ];
 
     protected $casts =[
+        'usr_id' => 'integer',
         'total_amount' => 'integer',
         'place_at' => 'datetime',
     ];
