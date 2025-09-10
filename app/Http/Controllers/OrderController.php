@@ -59,9 +59,13 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Order $order)
     {
-        //
+        abort_if($order->user_id !== Auth::id(), 403);
+        $order->load('items.product');
+
+
+        return view('order.show',compact('order'));
     }
 
     /**
