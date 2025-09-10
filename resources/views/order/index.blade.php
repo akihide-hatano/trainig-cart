@@ -37,18 +37,18 @@
                                 詳細
                             </a>
                     </td>
-                  </tr>
+                </tr>
                 @endforeach
               </tbody>
             </table>
 
             {{-- ページネーション --}}
             <div class="mt-4">
-              {{ $orders->links() }}
+                {{ $orders->links() }}
             </div>
-          @endif
+        @endif
         </div>
-      </div>
+    </div>
     </div>
   </div>
 </x-app-layout>
