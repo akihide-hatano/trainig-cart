@@ -39,8 +39,8 @@
                                     <td class="p-2 border flex items-center gap-2">
                                         {{-- 商品画像 --}}
                                         <img src="{{ $item->product->image ?? 'https://via.placeholder.com/50x50' }}"
-                                             alt="{{ $item->product->name ?? '商品画像' }}"
-                                             class="w-24 h-24 object-cover rounded">
+                                            alt="{{ $item->product->name ?? '商品画像' }}"
+                                            class="w-24 h-24 object-cover rounded">
                                         <span>{{ $item->product->name ?? '商品不明' }}</span>
                                     </td>
                                     <td class="p-2 border text-right">
