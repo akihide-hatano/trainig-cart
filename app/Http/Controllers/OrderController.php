@@ -77,7 +77,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         abort_if($order->user_id !== Auth::id(),403);
-        return view('order_edit',compact('order'));
+        return view('order.edit',compact('order'));
     }
 
     /**
@@ -92,7 +92,7 @@ class OrderController extends Controller
             'status'       => ['required', Rule::in(['pending','paid','cancelled'])],
         ]);
 
-        $order->updata($data);
+        $order->update($data);
         return redirect()->route('orders.show',$order)->with('success','注文が更新しました。');
     }
 
