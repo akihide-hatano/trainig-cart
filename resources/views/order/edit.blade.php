@@ -20,13 +20,13 @@
             @csrf
             @method('PATCH')
 
-        <div>
+        <div class="flex justify-center items-center gap-2">
             <label class="block text-sm font-medium text-gray-700">注文番号</label>
             <div class="mt-1 text-gray-900">#{{ $order->id }}</div>
         </div>
 
         <div class="mt-6">
-        <h3 class="text-md font-semibold mb-2">注文内容（参照）</h3>
+        <h3 class="text-md font-semibold mb-2 text-center">注文内容（参照）</h3>
 
         @if($order->items->isEmpty())
             <p class="text-gray-500">アイテムがありません。</p>
