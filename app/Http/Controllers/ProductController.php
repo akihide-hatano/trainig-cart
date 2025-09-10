@@ -23,7 +23,6 @@ public function index(Request $request)
         $query->where('name', 'like', "%{$q}%")
             ->orWhere('description', 'like', "%{$q}%");
     }
-
     // ソート条件
     if ($sort === 'price_asc') {
         $query->orderBy('price', 'asc');
@@ -32,7 +31,6 @@ public function index(Request $request)
     } else { // new
         $query->latest();
     }
-
     $products = $query->paginate(12)->withQueryString();
 
     return view('products.index', compact('products', 'q', 'sort'));
