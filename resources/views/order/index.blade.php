@@ -15,7 +15,6 @@
             <table class="min-w-full border border-gray-200">
               <thead class="bg-gray-100">
                 <tr>
-                  <th class="px-4 py-2 text-left">注文ID</th>
                   <th class="px-4 py-2 text-left">注文日</th>
                   <th class="px-4 py-2 text-left">商品数</th>
                   <th class="px-4 py-2 text-left">合計金額</th>
@@ -26,14 +25,11 @@
               <tbody>
                 @foreach($orders as $order)
                   <tr class="border-t">
-                    <td class="px-4 py-2">{{ $order->id }}</td>
                     <td class="px-4 py-2">{{ $order->placed_at->format('Y-m-d') }}</td>
                     <td class="px-4 py-2">{{ $order->items_count }}</td>
                     <td class="px-4 py-2">¥{{ number_format($order->total_amount) }}</td>
                     <td class="px-4 py-2">
-                      <span class="px-2 py-1 text-xs rounded bg-gray-100">
-                        {{ $order->status }}
-                      </span>
+                        <x-status-badge :status="$order->status" />
                     </td>
                     <td class="px-4 py-2">
                       <a href="{{ route('orders.show', $order) }}" class="text-indigo-600 hover:underline">詳細</a>
