@@ -24,7 +24,7 @@
                     <table class="w-full text-left border border-gray-300">
                         <thead>
                             <tr class="bg-gray-100">
-                                <th class="p-2 border">商品名</th>
+                                <th class="p-2 border">商品</th>
                                 <th class="p-2 border text-right">単価</th>
                                 <th class="p-2 border text-right">数量</th>
                                 <th class="p-2 border text-right">小計</th>
@@ -33,8 +33,12 @@
                         <tbody>
                             @foreach($order->items as $item)
                                 <tr>
-                                    <td class="p-2 border">
-                                        {{ $item->product->name ?? '商品不明' }}
+                                    <td class="p-2 border flex items-center gap-2">
+                                        {{-- 商品画像 --}}
+                                        <img src="{{ $item->product->image ?? 'https://via.placeholder.com/50x50' }}"
+                                             alt="{{ $item->product->name ?? '商品画像' }}"
+                                             class="w-24 h-24 object-cover rounded">
+                                        <span>{{ $item->product->name ?? '商品不明' }}</span>
                                     </td>
                                     <td class="p-2 border text-right">
                                         ¥{{ number_format($item->unit_price) }}
