@@ -25,6 +25,42 @@
             <div class="mt-1 text-gray-900">#{{ $order->id }}</div>
         </div>
 
+        <div class="mt-6">
+        <h3 class="text-md font-semibold mb-2">注文内容（参照）</h3>
+
+        @if($order->items->isEmpty())
+            <p class="text-gray-500">アイテムがありません。</p>
+        @else
+            <ul class="divide-y divide-gray-200 border rounded-md">
+            @foreach($order->items as $it)
+                <li class="flex items-center gap-3 p-3">
+                {{-- 画像（任意） --}}
+                <img
+                    src="{{ $it->product->image ?? 'https://via.placeholder.com/64x64' }}"
+                    alt="{{ $it->product->name ?? '商品画像' }}"
+                    class="w-12 h-12 object-cover rounded bg-gray-100"
+                >
+                <div class="flex-1">
+                    <div class="font-medium">
+                    {{ $it->product->name ?? '商品不明' }}
+                    </div>
+                    <div class="text-sm text-gray-600">
+                    単価 ¥{{ number_format($it->unit_price) }} / 小計 ¥{{ number_format($it->subtotal) }}
+                    </div>
+                </div>
+                <div class="text-sm">
+                    数量：<span class="font-semibold">{{ $it->quantity }}</span>
+                </div>
+                </li>
+            @endforeach
+            </ul>
+            <div class="text-right mt-3 text-sm text-gray-600">
+            合計：<span class="font-semibold">¥{{ number_format($order->total_amount) }}</span>
+            （{{ $order->items_count ?? $order->items->count() }} 点）
+            </div>
+        @endif
+        </div>
+
         <div>
             <label class="block text-sm font-medium text-gray-700">ステータス</label>
             <select name="status" class="mt-1 block w-60 rounded-md border-gray-300">
