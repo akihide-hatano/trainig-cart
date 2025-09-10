@@ -21,7 +21,7 @@ public function index(Request $request)
     // 検索条件
     if (!empty($q)) {
         $query->where('name', 'like', "%{$q}%")
-              ->orWhere('description', 'like', "%{$q}%");
+            ->orWhere('description', 'like', "%{$q}%");
     }
 
     // ソート条件
