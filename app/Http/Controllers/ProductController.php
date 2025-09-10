@@ -10,27 +10,34 @@ use function Ramsey\Uuid\v1;
 
 class ProductController extends Controller
 {
-    public function index(Request $request){
-    $q     = $request->string('q')->toString();
-    $sort  = $request->string('sort', 'new')->toString(); // new|price_asc|price_desc
 
-    $query = \App\Models\Product::query();
+public function index(Request $request)
+{
+    $q    = $request->input('q');             // キーワード
+    $sort = $request->input('sort', 'new');   // 並び順
 
-    if ($q !== '') {
-        $query->where(fn($w) =>
-                $w->where('name', 'like', "%{$q}%")
-                ->orWhere('description', 'like', "%{$q}%")
-        );
+    $query = Product::query();
+
+    // 検索条件
+    if (!empty($q)) {
+        $query->where('name', 'like', "%{$q}%")
+              ->orWhere('description', 'like', "%{$q}%");
     }
 
-    $query->when($sort === 'price_asc',  fn($q) => $q->orderBy('price', 'asc'))
-            ->when($sort === 'price_desc', fn($q) => $q->orderBy('price', 'desc'))
-            ->when($sort === 'new',        fn($q) => $q->latest());
+    // ソート条件
+    if ($sort === 'price_asc') {
+        $query->orderBy('price', 'asc');
+    } elseif ($sort === 'price_desc') {
+        $query->orderBy('price', 'desc');
+    } else { // new
+        $query->latest();
+    }
 
     $products = $query->paginate(12)->withQueryString();
 
     return view('products.index', compact('products', 'q', 'sort'));
-    }
+}
+
 
     public function show(Product $product){
         return view('products.show', compact('product'));
