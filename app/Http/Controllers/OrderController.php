@@ -21,7 +21,6 @@ class OrderController extends Controller
                 ->orderByDesc('placed_at')
                 ->paginate(10);
 
-        dd($orders->toArray()); // ← まず配列化して確認
 
         return view('order.index',compact('orders'));
     }
