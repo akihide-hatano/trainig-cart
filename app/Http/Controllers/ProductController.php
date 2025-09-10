@@ -10,9 +10,26 @@ use function Ramsey\Uuid\v1;
 
 class ProductController extends Controller
 {
-    public function index(){
-        $products = Product::all();
-        return view('products.index', compact('products'));
+    public function index(Request $request){
+    $q     = $request->string('q')->toString();
+    $sort  = $request->string('sort', 'new')->toString(); // new|price_asc|price_desc
+
+    $query = \App\Models\Product::query();
+
+    if ($q !== '') {
+        $query->where(fn($w) =>
+                $w->where('name', 'like', "%{$q}%")
+                ->orWhere('description', 'like', "%{$q}%")
+        );
+    }
+
+    $query->when($sort === 'price_asc',  fn($q) => $q->orderBy('price', 'asc'))
+            ->when($sort === 'price_desc', fn($q) => $q->orderBy('price', 'desc'))
+            ->when($sort === 'new',        fn($q) => $q->latest());
+
+    $products = $query->paginate(12)->withQueryString();
+
+    return view('products.index', compact('products', 'q', 'sort'));
     }
 
     public function show(Product $product){
