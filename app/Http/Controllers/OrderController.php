@@ -21,6 +21,8 @@ class OrderController extends Controller
                 ->orderByDesc('placed_at')
                 ->paginate(10);
 
+        dd($orders->toArray()); // ← まず配列化して確認
+
         return view('order.index',compact('orders'));
     }
 
@@ -51,6 +53,9 @@ class OrderController extends Controller
             'status'       => $data['status'],
             'placed_at'    => $data['placed_at'] ?? now(),
         ]);
+
+        dd($order->toArray()); // ← まず配列化して確認
+
 
         return redirect()->route('orders.show',$order)
                         ->with('success','注文を作成しました');
