@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use Illuminate\Validation\Rule;
+
 
 class OrderController extends Controller
 {
@@ -11,7 +15,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::with('items')
+                ->withCount('items')
+                ->where('user_id',Auth::id())
+                ->orderByDesc('placed_at')
+                ->paginate(10);
+
+        return view('order.index',compact('orders'));
     }
 
     /**
@@ -19,7 +29,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('order.create');
     }
 
     /**
@@ -27,7 +37,23 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validationを設定
+        $data = $request->validate([
+            'total_amount' => ['required','integer','min:0'],
+            'status' => ['required',Rule::in(['pending','paid','cancelled'])],
+            'placed_at' => ['nullable','date'],
+        ]);
+
+        //createでorderを作る
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'total_amount' => $data['total_amount'],
+            'status'       => $data['status'],
+            'placed_at'    => $data['placed_at'] ?? now(),
+        ]);
+
+        return redirect()->route('orders.show',$order)
+                        ->with('success','注文を作成しました');
     }
 
     /**
