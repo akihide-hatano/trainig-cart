@@ -9,12 +9,29 @@
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
 
+                @php
+                // ステータスごとの色マップ（Tailwind）
+                $statusClassMap = [
+                    'pending'   => 'bg-yellow-100 text-yellow-800 ring-yellow-600/20',
+                    'paid'      => 'bg-green-100 text-green-800 ring-green-600/20',
+                    'cancelled' => 'bg-red-100 text-red-800 ring-red-600/20',
+                    // もし使うなら
+                    'shipped'   => 'bg-blue-100 text-blue-800 ring-blue-600/20',
+                ];
+                $badgeClass = $statusClassMap[$order->status] ?? 'bg-gray-100 text-gray-800 ring-gray-600/20';
+                @endphp
+
                 {{-- 注文情報 --}}
                 <div class="mb-6">
                     <h3 class="text-lg font-semibold mb-2">注文情報</h3>
                     <p><strong>注文番号:</strong> #{{ $order->id }}</p>
                     <p><strong>注文日:</strong> {{ $order->placed_at->format('Y-m-d H:i') }}</p>
-                    <p><strong>ステータス:</strong> {{ $order->status }}</p>
+                    <p>
+                    <strong>ステータス:</strong>
+                    <span class="inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset {{ $badgeClass }}">
+                        {{ __($order->status) }}
+                    </span>
+                    </p>
                     <p><strong>合計金額:</strong> ¥{{ number_format($order->total_amount) }}</p>
                 </div>
 
