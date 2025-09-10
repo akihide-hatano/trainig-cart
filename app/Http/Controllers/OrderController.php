@@ -64,31 +64,43 @@ class OrderController extends Controller
         abort_if($order->user_id !== Auth::id(), 403);
         $order->load('items.product');
 
-
         return view('order.show',compact('order'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Order $order)
     {
-        //
+        abort_if($order->user_id !== Auth::id(),403);
+        return view('order_edit',compact('order'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Order $order)
     {
-        //
+        abort_if($order->user_id !== Auth::id(),403);
+
+        $data = $request->validate([
+        // 通常ユーザーは status の変更だけ（例：キャンセル）に絞るのが安全
+            'status'       => ['required', Rule::in(['pending','paid','cancelled'])],
+        ]);
+
+        $order->updata($data);
+        return redirect()->route('orders.show',$order)->with('success','注文が更新しました。');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Order $order)
     {
-        //
+        abort_if($order->user_id !== Auth::id(),403);
+
+         // 実務は cancel へ状態遷移の方が安全
+        $order->delete();
+        return redirect()->route('orders.index')->with('success', '注文を削除しました。');
     }
 }
