@@ -1,9 +1,9 @@
 <x-app-layout>
-  <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      商品詳細
-    </h2>
-  </x-slot>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        商品詳細
+        </h2>
+    </x-slot>
 
     {{-- フラッシュメッセージ --}}
     @if (session('success'))
@@ -19,34 +19,6 @@
             {{ session('error') }}
         </div>
     @endif
-
-    {{-- JSでフェードアウト --}}
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // success メッセージ
-        let successEl = document.getElementById("flash-sucess");
-        if(successEl){
-            setTimeout(function(){
-                successEl.style.transition = "opacity 0.8s";
-                successEl.style.opacity = "0";
-                setTimeout(function(){
-                    successEl.remove();
-                },800);
-            },2500);
-        }
-        // error メッセージ
-        let errorEl = document.getElementById("flash-error");
-        if (errorEl) {
-            setTimeout(function () {
-                errorEl.style.transition = "opacity 0.8s";
-                errorEl.style.opacity = "0";
-                setTimeout(function () {
-                    errorEl.remove();
-                }, 800);
-            }, 3500);
-        }
-    });
-    </script>
 
 <div class="py-10">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
