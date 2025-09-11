@@ -67,7 +67,7 @@
                             カートに追加
                         </button>
                     </form>
-                    <form action="{{ route('products.destroy','$product')}}" method="post"
+                    <form action="{{  route('products.destroy', $product) }}" method="post"
                         onclick="return confirm('本当に削除しますか')">
                         @csrf
                         @method('DELETE')
