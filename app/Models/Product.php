@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -40,5 +41,20 @@ class Product extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+        public function getImageUrlAttribute(): string
+    {
+        if (!$this->image) {
+            return 'https://via.placeholder.com/600x600?text=No+Image';
+        }
+
+        // すでに外部URLならそのまま
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+
+        // ローカル保存（storage/app/public/...）の場合
+        return asset('storage/'.$this->image);
     }
 }
