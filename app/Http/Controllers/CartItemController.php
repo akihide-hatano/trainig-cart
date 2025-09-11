@@ -52,6 +52,7 @@ public function store(Request $request)
     $data = $request->validate([
         'product_id' => ['required','integer','exists:products,id'],
         'quantity'   => ['nullable','integer','min:1','max:99'],
+        'go_cart'    => ['nullable','boolean'],
     ]);
     $qty = $data['quantity'] ?? 1;
 

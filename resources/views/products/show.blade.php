@@ -11,7 +11,6 @@
 
         <div class="max-w-5xl mx-auto">
         <article class="border rounded-xl sm:rounded-none overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2">
-            {{-- 画像：切り抜きNG・上詰め表示 --}}
             <div class="w-full md:h-full bg-gray-100">
             <img
                 src="{{ $product->image ?? 'https://via.placeholder.com/800x800?text=No+Image' }}"
