@@ -21,8 +21,6 @@
                 class="w-full h-full object-contain object-top"
             >
             </div>
-
-
             {{-- 本文 --}}
             <div class="p-6 flex flex-col">
               <h1 class="text-2xl font-bold">{{ $product->name }}</h1>
