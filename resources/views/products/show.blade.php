@@ -7,25 +7,47 @@
 
     {{-- フラッシュメッセージ --}}
     @if (session('success'))
-    <div
-        x-data="{ show: true }"
-        x-show="show"
-        x-init="setTimeout(() => show = false, 2500)"
-        class="mb-4 rounded-md bg-green-50 p-3 text-green-800 border border-green-200"
-    >
-        {{ session('success') }}
-    </div>
+        <div id="flash-success"
+            class="mb-4 rounded-md bg-green-50 p-3 text-green-800 border border-green-200">
+            {{ session('success') }}
+        </div>
     @endif
+
     @if (session('error'))
-    <div
-        x-data="{ show: true }"
-        x-show="show"
-        x-init="setTimeout(() => show = false, 3500)"
-        class="mb-4 rounded-md bg-red-50 p-3 text-red-800 border border-red-200"
-    >
-        {{ session('error') }}
-    </div>
+        <div id="flash-error"
+            class="mb-4 rounded-md bg-red-50 p-3 text-red-800 border border-red-200">
+            {{ session('error') }}
+        </div>
     @endif
+
+    {{-- JSでフェードアウト --}}
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // success メッセージ
+        let successEl = document.getElementById("flash-success");
+        if (successEl) {
+            setTimeout(function () {
+                successEl.style.transition = "opacity 0.8s";
+                successEl.style.opacity = "0";
+                setTimeout(function () {
+                    successEl.remove();
+                }, 800);
+            }, 2500);
+        }
+
+        // error メッセージ
+        let errorEl = document.getElementById("flash-error");
+        if (errorEl) {
+            setTimeout(function () {
+                errorEl.style.transition = "opacity 0.8s";
+                errorEl.style.opacity = "0";
+                setTimeout(function () {
+                    errorEl.remove();
+                }, 800);
+            }, 3500);
+        }
+    });
+    </script>
 
 <div class="py-10">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
