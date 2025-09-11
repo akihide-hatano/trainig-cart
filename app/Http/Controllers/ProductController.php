@@ -51,17 +51,30 @@ public function index(Request $request)
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|integer|min:0',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        //画像ファイルの保存
+        $imagePath = null;
+        if( $request->hasFile('image')){
+            // storage/app/public/products に画像を保存
+            // storeメソッドがユニークなファイル名を自動生成
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
         //dataの登録
         try{
-            Product::create($validated);
+            Product::create([
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'price' => $validated['price'],
+                'image' => $imagePath,
+            ]);
         }
         catch(\Exception $e){
             // 登録失敗時の処理（例：ログ出力やエラーメッセージのリダイレクト）
             return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
         }
-
         return redirect()->route('products.index')
                             ->with('message','商品が正常に登録されました');
     }
