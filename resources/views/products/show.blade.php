@@ -20,7 +20,7 @@
 
                         <div class="p-4 flex-1 flex flex-col md:w-1/2">
                             <h3 class="font-semibold text-2xl">{{ $product->name }}</h3>
-                            <p class="text-gray">{{$product->created_at}}</p>
+                            <p class="text-gray"><span class="mr-2">登録日</span>{{$product->created_at->format('Y年m月d日')}}</p>
                             <p class="mt-2 text-gray-600">{{ $product->description }}</p>
 
                             <div class="mt-4 font-bold text-3xl">¥{{ number_format($product->price) }}</div>
