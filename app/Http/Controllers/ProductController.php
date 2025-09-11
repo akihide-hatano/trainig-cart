@@ -41,7 +41,7 @@ public function index(Request $request)
         return view('products.show', compact('product'));
     }
 
-    public function create(Product $product){
+    public function create(){
         return view('products.create');
     }
 
