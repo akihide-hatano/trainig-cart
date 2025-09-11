@@ -3,8 +3,10 @@ window.previewFile = function (input) {
     const img = document.getElementById('preview-img');
 
     if (file) {
+        //newFilereaderで情報取得
         const reader = new FileReader();
         reader.onload = function(e) {
+            console.log(e);
             img.src = e.target.result;
             img.classList.remove('hidden');
         }
