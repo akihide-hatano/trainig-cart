@@ -24,17 +24,16 @@
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         // success メッセージ
-        let successEl = document.getElementById("flash-success");
-        if (successEl) {
-            setTimeout(function () {
+        let successEl = document.getElementById("flash-sucess");
+        if(successEl){
+            setTimeout(function(){
                 successEl.style.transition = "opacity 0.8s";
                 successEl.style.opacity = "0";
-                setTimeout(function () {
+                setTimeout(function(){
                     successEl.remove();
-                }, 800);
-            }, 2500);
+                },800);
+            },2500);
         }
-
         // error メッセージ
         let errorEl = document.getElementById("flash-error");
         if (errorEl) {
