@@ -60,12 +60,21 @@
 
                     {{-- カートに追加（最小） --}}
                     <form action="{{ route('cart.items.store') }}" method="POST" class="flex-1">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                    <button type="submit"
-                            class="w-full px-3 py-2 rounded-md bg-indigo-600 text-white font-semibold hover:bg-indigo-700">
-                        カートに追加
-                    </button>
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        <button type="submit"
+                                class="w-full px-3 py-2 rounded-md bg-indigo-600 text-white font-semibold hover:bg-indigo-700">
+                            カートに追加
+                        </button>
+                    </form>
+                    <form action="{{ route('products.destroy','$product')}}" method="post"
+                        onclick="return confirm('本当に削除しますか')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="px-3 py-2 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700">
+                        削除
+                        </button>
                     </form>
                 </div>
                 </div>
