@@ -51,7 +51,7 @@ public function index(Request $request)
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|integer|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|string|max:255',
         ]);
 
         //画像ファイルの保存
