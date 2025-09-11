@@ -1,16 +1,15 @@
-function previewFile(input){
-
-    const file = input.file[0];
+window.previewFile = function (input) {
+    const file = input.files[0];
     const img = document.getElementById('preview-img');
 
-    if(file){
+    if (file) {
         const reader = new FileReader();
-        reader.onload = function(e){
+        reader.onload = function(e) {
             img.src = e.target.result;
             img.classList.remove('hidden');
         }
         reader.readAsDataURL(file);
-    }else{
+    } else {
         img.src = "";
         img.classList.add("hidden");
     }
