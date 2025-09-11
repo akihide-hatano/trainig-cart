@@ -67,14 +67,14 @@
                             カートに追加
                         </button>
                     </form>
-                    <form action="{{  route('products.destroy', $product) }}" method="post"
-                        onclick="return confirm('本当に削除しますか')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="px-3 py-2 rounded-md bg-red-600 text-white text-sm font-semibold hover:bg-red-700">
+                    <form action="{{ route('products.destroy', $product) }}" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            onclick="return confirm('本当に削除しますか？')"
+                            class="inline-flex items-center px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700">
                         削除
-                        </button>
+                    </button>
                     </form>
                 </div>
                 </div>
