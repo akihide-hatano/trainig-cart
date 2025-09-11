@@ -53,4 +53,5 @@
             </div>
         </div>
     </div>
+    @vite('resources/js/products/image.js');
 </x-app-layout>
