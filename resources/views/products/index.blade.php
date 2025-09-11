@@ -41,11 +41,26 @@
                 @foreach($products as $product)
                 <article class="border rounded-xl overflow-hidden hover:shadow-sm transition bg-white flex flex-col">
                 {{-- 画像は正方形でトリミング --}}
-                    <div class="w-full aspect-square bg-gray-100">
-                        <img src="{{ $product->image ?? 'https://via.placeholder.com/600x600?text=No+Image' }}"
+                <div class="w-full aspect-square bg-gray-100">
+                    @if ($product->image)
+                        @if (Str::startsWith($product->image, ['http://', 'https://']))
+                            {{-- URLで保存された画像の場合 --}}
+                            <img src="{{ $product->image }}"
+                                alt="{{ $product->name }}"
+                                class="w-full h-full object-cover" />
+                        @else
+                            {{-- ファイルとしてアップロードされた画像の場合 --}}
+                            <img src="{{ asset('storage/' . $product->image) }}"
+                                alt="{{ $product->name }}"
+                                class="w-full h-full object-cover" />
+                        @endif
+                    @else
+                        {{-- 画像が登録されていない場合 --}}
+                        <img src="https://via.placeholder.com/600x600?text=No+Image"
                             alt="{{ $product->name }}"
                             class="w-full h-full object-cover" />
-                    </div>
+                    @endif
+                </div>
 
                 <div class="p-4 flex-1 flex flex-col">
                     <h3 class="font-semibold line-clamp-2">{{ $product->name }}</h3>
