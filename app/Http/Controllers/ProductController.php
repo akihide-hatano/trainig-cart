@@ -54,8 +54,6 @@ public function index(Request $request)
             'price' => 'required|integer|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // ←ファイル前提
         ]);
-
-        
         //画像ファイルの保存
         $imagePath = null;
         if( $request->hasFile('image')){
@@ -106,7 +104,6 @@ public function update(Request $request, Product $product)
             Storage::disk('public')->delete($product->image);
         }
     }
-    
     //databaseの登録
     try{
         // 画像パスを更新データに追加
@@ -120,7 +117,6 @@ public function update(Request $request, Product $product)
         // 登録失敗時の処理（例：ログ出力やエラーメッセージのリダイレクト）
         return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
     }
-    
     return redirect()->route('products.show', $product)
                     ->with('message', '商品情報が正常に更新されました。');
 }
