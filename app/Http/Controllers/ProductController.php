@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use function Ramsey\Uuid\v1;
 
@@ -84,26 +85,45 @@ public function index(Request $request)
         return view('products.edit',compact('product'));
     }
 
-    public function update(Request $request, Product $product)
-    {
-        //validationの実施
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|integer|min:0',
-            'image' => 'nullable|url',
-        ]);
-        //databaseの登録
-        try{
-            $product->updated($validated);
+public function update(Request $request, Product $product)
+{
+    // validationの実施
+    $validated = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'price' => 'required|integer|min:0',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // nullを許容
+    ]);
+
+    // ①画像ファイルの保存
+    // $imagePath = null;
+    if ($request->hasFile('image')) {
+        // storage/app/public/products に画像を保存
+        $imagePath = $request->file('image')->store('products', 'public');
+
+        // ②古い画像ファイルを削除するロジックを追加
+        if ($product->image) {
+            Storage::disk('public')->delete($product->image);
         }
-        catch(\Exception $e){
-            // 登録失敗時の処理（例：ログ出力やエラーメッセージのリダイレクト）
-            return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
-        }
-        return redirect()->route('products.show', $product)
-                        ->with('message', '商品情報が正常に更新されました。');
     }
+    
+    //databaseの登録
+    try{
+        // 画像パスを更新データに追加
+        if (isset($imagePath)) {
+            $product->update(array_merge($validated, ['image' => $imagePath]));
+        } else {
+            // 画像がアップロードされていない場合は、他のフィールドのみを更新
+            $product->update($validated);
+        }
+    } catch(\Exception $e){
+        // 登録失敗時の処理（例：ログ出力やエラーメッセージのリダイレクト）
+        return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
+    }
+    
+    return redirect()->route('products.show', $product)
+                    ->with('message', '商品情報が正常に更新されました。');
+}
 
     public function destroy(Product $product)
     {
