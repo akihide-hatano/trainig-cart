@@ -51,9 +51,10 @@ public function index(Request $request)
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|integer|min:0',
-            'image' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // ←ファイル前提
         ]);
 
+        
         //画像ファイルの保存
         $imagePath = null;
         if( $request->hasFile('image')){
@@ -61,7 +62,7 @@ public function index(Request $request)
             // storeメソッドがユニークなファイル名を自動生成
             $imagePath = $request->file('image')->store('products', 'public');
         }
-
+        // dd('store hit', $request->all(), $request->file('image'));
         //dataの登録
         try{
             Product::create([
@@ -76,7 +77,7 @@ public function index(Request $request)
             return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
         }
         return redirect()->route('products.index')
-                            ->with('message','商品が正常に登録されました');
+        ->with('message','商品が正常に登録されました');
     }
 
     public function edit(Product $product){

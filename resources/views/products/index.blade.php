@@ -64,7 +64,7 @@
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <button type="submit"
                                 class="w-full px-3 py-2 rounded-md bg-indigo-600 text-white font-semibold hover:bg-indigo-700">
-                            カートに追加
+                            カート追加
                         </button>
                     </form>
                     <form action="{{ route('products.destroy', $product) }}" method="POST" class="inline">
