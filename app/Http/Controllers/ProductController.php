@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 use function Ramsey\Uuid\v1;
 
@@ -47,6 +48,7 @@ public function index(Request $request)
     }
 
     public function store(Request $request){
+        Log::info('商品を登録しました');
         //Validation
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -54,12 +56,16 @@ public function index(Request $request)
             'price' => 'required|integer|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // ←ファイル前提
         ]);
+
+        Log::debug('バリデーション成功', $validated);
+
         //画像ファイルの保存
         $imagePath = null;
         if( $request->hasFile('image')){
             // storage/app/public/products に画像を保存
             // storeメソッドがユニークなファイル名を自動生成
             $imagePath = $request->file('image')->store('products', 'public');
+            Log::info('画像が保存されました。パス:' . $imagePath);
         }
         // dd('store hit', $request->all(), $request->file('image'));
         //dataの登録
@@ -70,6 +76,7 @@ public function index(Request $request)
                 'price' => $validated['price'],
                 'image' => $imagePath,
             ]);
+            Log::info('商品が正常に登録されました。');
         }
         catch(\Exception $e){
             // 登録失敗時の処理（例：ログ出力やエラーメッセージのリダイレクト）
@@ -85,6 +92,8 @@ public function index(Request $request)
 
 public function update(Request $request, Product $product)
 {
+
+
     // validationの実施
     $validated = $request->validate([
         'name' => 'required|string|max:255',
@@ -123,12 +132,25 @@ public function update(Request $request, Product $product)
 
     public function destroy(Product $product)
     {
+        Log::info("商品ID:{$product->id}の削除リクエストを受信しました。");
+
         try{
-            //データベースから商品を削除
-            $product->delete();
+            //商品が画像に紐づいている場合、画像を削除する
+            if($product->image){
+                Storage::disk('public')->delete($product->image);
+                Log::info("商品ID:{$product->id}に関連付けられた画像が削除されました。");
+            }
+                //データベースから商品を削除
+                $product->delete();
+                Log::info("商品ID:{$product->id}が正常に削除されました");
         }
         catch(\Exception $e){
             //削除失敗の処理
+            Log::error([
+                "商品ID:{$product->id}の削除中にエラーが発生しました。",
+                'message' => $e->getMessage(),
+                'trance' => $e->getTraceAsString()
+            ]);
             return back()->with('error', '商品の削除に失敗しました。もう一度お試しください。');
         }
         //削除成功時にリダイレクト
