@@ -11,6 +11,7 @@
     <div class="py-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                <div class="flex flex-wrap justify-between items-center mb-6">
 
         {{-- 検索と並び替え --}}
         <form method="GET" action="{{ route('products.index') }}" class="flex flex-wrap items-end gap-3 mb-6">
@@ -32,6 +33,12 @@
             検索
         </button>
         </form>
+        {{-- 新しい商品を作成するボタン --}}
+        <a href="{{ route('products.create') }}"
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 ">
+            商品を作成
+        </a>
+        </div>
 
         {{-- 空表示 --}}
         @if($products->isEmpty())
