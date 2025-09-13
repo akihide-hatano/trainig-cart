@@ -102,21 +102,17 @@ public function index(Request $request)
         'price' => 'required|integer|min:0',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // nullを許容
     ]);
-    
     // バリデーション成功後のデータをログに出力
     Log::info('バリデーション成功。', ['validated_data' => $validated]);
 
     // ①画像ファイルの保存
     // 画像がアップロードされたかどうかをログに出力
     Log::info('画像アップロードの有無:', ['hasFile' => $request->hasFile('image')]);
-    
     if ($request->hasFile('image')) {
         // storage/app/public/products に画像を保存
         $imagePath = $request->file('image')->store('products', 'public');
-        
         // 新しい画像パスをログに出力
         Log::info('新しい画像が保存されました。', ['path' => $imagePath]);
-
         // ②古い画像ファイルを削除するロジックを追加
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
