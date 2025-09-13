@@ -142,7 +142,11 @@ public function update(Request $request, Product $product)
             }
                 //データベースから商品を削除
                 $product->delete();
-                Log::info("商品ID:{$product->id}が正常に削除されました");
+                Log::info("商品ID:{$product->id}が正常に削除されました。", [
+                    'file' => __FILE__,      // 実行中のファイル名
+                    'line' => __LINE__,      // 実行中の行番号
+                    'method' => __METHOD__,  // 実行中のメソッド名
+            ]);
         }
         catch(\Exception $e){
             //削除失敗の処理
