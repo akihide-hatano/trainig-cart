@@ -90,9 +90,10 @@ public function index(Request $request)
         return view('products.edit',compact('product'));
     }
 
-public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product)
 {
-
+    // 処理開始時にリクエスト全体をログに出力
+    Log::info('商品更新リクエストを受信しました。', ['request_data' => $request->all()]);
 
     // validationの実施
     $validated = $request->validate([
@@ -101,31 +102,47 @@ public function update(Request $request, Product $product)
         'price' => 'required|integer|min:0',
         'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // nullを許容
     ]);
+    
+    // バリデーション成功後のデータをログに出力
+    Log::info('バリデーション成功。', ['validated_data' => $validated]);
 
     // ①画像ファイルの保存
-    // $imagePath = null;
+    // 画像がアップロードされたかどうかをログに出力
+    Log::info('画像アップロードの有無:', ['hasFile' => $request->hasFile('image')]);
+    
     if ($request->hasFile('image')) {
         // storage/app/public/products に画像を保存
         $imagePath = $request->file('image')->store('products', 'public');
+        
+        // 新しい画像パスをログに出力
+        Log::info('新しい画像が保存されました。', ['path' => $imagePath]);
 
         // ②古い画像ファイルを削除するロジックを追加
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
+            // 古い画像が削除されたことをログに出力
+            Log::info('古い画像が削除されました。', ['old_path' => $product->image]);
         }
     }
+
     //databaseの登録
     try{
         // 画像パスを更新データに追加
         if (isset($imagePath)) {
             $product->update(array_merge($validated, ['image' => $imagePath]));
+            Log::info('商品が新しい画像パスで更新されました。');
         } else {
             // 画像がアップロードされていない場合は、他のフィールドのみを更新
             $product->update($validated);
+            Log::info('商品が画像なしで更新されました。');
         }
     } catch(\Exception $e){
         // 登録失敗時の処理（例：ログ出力やエラーメッセージのリダイレクト）
+        Log::error('商品の更新中にエラーが発生しました。', ['message' => $e->getMessage()]);
         return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
     }
+    
+    Log::info('商品情報が正常に更新され、リダイレクトします。');
     return redirect()->route('products.show', $product)
                     ->with('success', '商品情報が正常に更新されました。');
 }
