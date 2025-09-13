@@ -5,15 +5,8 @@
         </h2>
     </x-slot>
 
-    @if ($errors->any())
-        <div class="mb-4 text-sm text-red-600">
-            <ul class="list-disc pl-5">
-                @foreach ($errors->all() as $e)
-                    <li>{{ $e }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    {{-- フラッシュメッセージ --}}
+    <x-flash.message />
 
     <div class="py-12">
         <div class="max-w-xl mx-auto sm:px-6 lg:px-8">

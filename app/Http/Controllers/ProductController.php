@@ -76,7 +76,7 @@ public function index(Request $request)
             return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
         }
         return redirect()->route('products.index')
-        ->with('message','商品が正常に登録されました');
+        ->with('success','商品が正常に登録されました');
     }
 
     public function edit(Product $product){
@@ -118,7 +118,7 @@ public function update(Request $request, Product $product)
         return back()->withInput()->with('error', '商品の登録に失敗しました。もう一度お試しください。');
     }
     return redirect()->route('products.show', $product)
-                    ->with('message', '商品情報が正常に更新されました。');
+                    ->with('success', '商品情報が正常に更新されました。');
 }
 
     public function destroy(Product $product)
@@ -133,6 +133,6 @@ public function update(Request $request, Product $product)
         }
         //削除成功時にリダイレクト
         return redirect()->route('products.index')
-                        ->with('message', '商品が正常に削除されました。');
+                        ->with('success', '商品が正常に削除されました。');
     }
 }
