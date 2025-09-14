@@ -16,8 +16,8 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
-        'price',   // 整数（例：税込の円）
-        'image',   // 画像URL or パス
+        'price',
+        'image',
     ];
 
     /**
