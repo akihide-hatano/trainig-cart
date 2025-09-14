@@ -90,27 +90,22 @@
     </div>
   </div>
 
-  <div
-    id="track"
-    class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth
-           [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-gray-100"
-    aria-label="新着商品スライダー"
-  >
+  <div id="track" class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth
+        [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-gray-100"
+    aria-label="新着商品スライダー" >
     @foreach($newProducts as $p)
-      <article
-        class="snap-start shrink-0 w-[240px] sm:w-[280px] border rounded-xl overflow-hidden bg-white"
-      >
+      <article class="snap-start shrink-0 w-[240px] sm:w-[280px] border rounded-xl overflow-hidden bg-white">
         <div class="w-full aspect-square bg-gray-100">
-          <img src="{{ $p->image_url }}" alt="{{ $p->name }}" class="w-full h-full object-cover">
+            <img src="{{ $p->image_url }}" alt="{{ $p->name }}" class="w-full h-full object-cover">
         </div>
         <div class="p-3">
-          <h4 class="font-semibold line-clamp-2">{{ $p->name }}</h4>
-          <div class="mt-1 text-sm text-gray-500">¥{{ number_format($p->price) }}</div>
+            <h4 class="font-semibold line-clamp-2">{{ $p->name }}</h4>
+            <div class="mt-1 text-sm text-gray-500">¥{{ number_format($p->price) }}</div>
 
-          <div class="mt-3 flex gap-2">
+        <div class="mt-3 flex gap-2">
             <a href="{{ route('products.show', $p) }}"
-               class="flex-1 text-center px-3 py-2 rounded border hover:bg-gray-50">
-              詳細
+                class="flex-1 text-center px-3 py-2 rounded border hover:bg-gray-50">
+            詳細
             </a>
             <form action="{{ route('cart.items.store') }}" method="POST" class="flex-1">
               @csrf
