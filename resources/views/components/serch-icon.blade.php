@@ -1,8 +1,5 @@
-<svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 16 16" 
-    fill="currentColor"
-    {{ $attributes->merge(['class' => 'bi bi-search h-5 w-5']) }}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+{{ $attributes->merge(['class' => 'bi bi-search h-5 w-5']) }}
 >
   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001
     q.044.06.098.115l3.85 3.85a1 1 0 0 0
