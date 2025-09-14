@@ -64,7 +64,7 @@
                     <div class="mt-3 font-bold text-lg">¥{{ number_format($product->price) }}</div>
 
                 {{-- ボタン群 --}}
-                <div class="mt-4 flex items-center gap-2">
+                <div class="mt-4 flex items-center justify-end gap-2">
                     <a href="{{ route('products.show', $product) }}"
                         class="px-3 py-2 rounded-md text-white font-semibold  bg-indigo-600 border hover:bg-indigo-700">
                         詳細
