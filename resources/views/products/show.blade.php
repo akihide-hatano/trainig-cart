@@ -16,7 +16,7 @@
         <article class="border rounded-xl sm:rounded-none overflow-hidden bg-white grid grid-cols-1 md:grid-cols-2">
             <div class="w-full md:h-full bg-gray-100">
             <img
-                src="{{ $product->image ?? 'https://via.placeholder.com/800x800?text=No+Image' }}"
+                src="{{ $product->image_url}}"
                 alt="{{ $product->name }}"
                 class="w-full h-full object-contain object-top"
             >
