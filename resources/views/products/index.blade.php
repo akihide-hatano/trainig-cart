@@ -30,7 +30,7 @@
             </select>
         </div>
         <button class="inline-flex items-center px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
-            <x-serch-icon class="h-5 w-5 mr-4 inline-block" />
+            <x-search-icon class="h-5 w-5 mr-4 inline-block" />
             <span>検索</span>
         </button>
         </form>
