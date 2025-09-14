@@ -46,7 +46,7 @@
                   <div>
                     <label for="quantity" class="block text-sm text-gray-600">数量</label>
                     <input id="quantity" type="number" name="quantity" value="1" min="1" max="99"
-                           class="w-24 rounded-md border-gray-300">
+                          class="w-24 rounded-md border-gray-300">
                   </div>
                   <button type="submit"
                           class="px-4 py-2 rounded-md bg-indigo-600 text-white font-semibold hover:bg-indigo-700">
@@ -54,7 +54,7 @@
                   </button>
 
                   <a href="{{ route('cart.index') }}"
-                     class="ml-auto px-4 py-2 rounded-md border hover:bg-gray-50">
+                      class="ml-auto px-4 py-2 rounded-md border hover:bg-gray-50">
                     カートを見る
                   </a>
                 </form>

@@ -35,8 +35,11 @@
         </form>
         {{-- 新しい商品を作成するボタン --}}
         <a href="{{ route('products.create') }}"
-        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 ">
-            商品を作成
+        class="inline-flex items-center px-6 py-3 bg-green-600 text-white font-bold rounded-full shadow-lg hover:bg-green-700 hover:shadow-xl transform hover:scale-105 transition ease-in-out duration-300">
+            <svg class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span>商品を作成</span>
         </a>
         </div>
 
