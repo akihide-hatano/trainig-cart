@@ -29,8 +29,9 @@
                 <option value="price_desc" @selected(($sort ?? '')==='price_desc')>価格の高い順</option>
             </select>
         </div>
-        <button class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
-            検索
+        <button class="inline-flex items-center px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+            <x-serch-icon class="h-5 w-5 mr-4 inline-block" />
+            <span>検索</span>
         </button>
         </form>
         {{-- 新しい商品を作成するボタン --}}
