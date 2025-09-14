@@ -134,8 +134,13 @@
     }
 
     // 手動ナビ
-    prev?.addEventListener('click', () => scrollByOne(-1));
-    next?.addEventListener('click', () => scrollByOne(+1));
+    if(prev){
+      prev.addEventListener('click',()=> scrollByOne(-1));
+    }
+    if(next){
+      next.addEventListener('click',()=> scrollByOne(+1));
+
+    }
 
     function scrollByOne(dir = +1) {
       track.scrollBy({ left: dir * cardWidth(), behavior: 'smooth' });
