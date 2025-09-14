@@ -119,11 +119,7 @@
                 <div class="border rounded-lg overflow-hidden shadow-sm flex flex-col">
                 {{-- 画像：カード幅に応じた完全な正方形 --}}
                 <div class="w-full aspect-square bg-gray-100 overflow-hidden">
-                    <img
-                    src="{{ $product->image ?? 'https://via.placeholder.com/400x400' }}"
-                    alt="{{ $product->name }}"
-                    class="w-full h-full object-cover"  {{-- 切り抜きOK。切り抜きNGなら object-contain --}}
-                    >
+                  <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
                 </div>
                 {{-- 本文 --}}
                 <div class="p-4 flex flex-col gap-2">
