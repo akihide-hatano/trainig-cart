@@ -47,7 +47,6 @@
           <h3 class="font-semibold">最近の購入履歴</h3>
           <a href="{{ route('orders.index') }}" class="text-indigo-600 hover:underline text-sm">注文一覧へ</a>
         </div>
-
         @if($recentOrders->isEmpty())
           <p class="text-gray-600">まだ注文履歴がありません。</p>
         @else
@@ -77,7 +76,6 @@
           </table>
         @endif
       </div>
-
 {{-- 新着商品スライダー --}}
       <section class="mt-8">
           <div class="flex items-center justify-between mb-3">
@@ -125,7 +123,7 @@
               商品一覧へ
           </a>
         </div>
-        </section>
+      </section>
     </div>
   </div>
 @vite('resources/js/dashboard.js')
