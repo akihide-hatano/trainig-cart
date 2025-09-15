@@ -64,7 +64,7 @@
               @foreach($recentOrders as $o)
                 <tr class="border-t">
                   <td class="py-2">{{ $o->placed_at->format('Y-m-d H:i') }}</td>
-                  <td class="text-right">¥{{ number_format($o->total_amount) }}</td>
+                  <td class="text-right pr-3">¥{{ number_format($o->total_amount) }}</td>
                   <td><x-status-badge :status="$o->status" /></td>
                   <td class="text-right">{{ $o->items_count }}</td>
                   <td class="text-right">
