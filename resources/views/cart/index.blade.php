@@ -34,7 +34,7 @@
                 <article class="flex gap-4 p-3 border border-gray-200 rounded-xl">
                   {{-- 画像 --}}
                   <div class="flex-shrink-0 w-24 h-24 md:w-20 md:h-20">
-                    <img src="{{ $item->product->image ?? '' }}"
+                    <img src="{{ $item->product->image_url ?? '' }}"
                          alt="{{ $item->product->name }}"
                          class="w-full h-full object-cover rounded-lg bg-gray-100">
                   </div>
