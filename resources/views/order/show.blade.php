@@ -59,11 +59,11 @@
                 </div>
 
                 {{-- 戻るリンク --}}
-                <div class="mt-6">
+                <div class="mt-6 flex justify-center">
                 <a href="{{ route('orders.index') }}"
-                    class="inline-flex items-center gap-2 px-4 py-2 bg-blue-800 rounded hover:bg-blue-600">
-                    <x-icon-back />
-                    <span>注文一覧に戻る</span>
+                    class="inline-flex items-center  gap-2 px-4 py-2 bg-blue-800 rounded hover:bg-blue-600">
+                    <x-icon-back class="text-white"/>
+                    <span class="text-white">注文一覧に戻る</span>
                 </a>
                 </div>
             </div>
