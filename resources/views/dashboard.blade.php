@@ -139,7 +139,6 @@
     }
     if(next){
       next.addEventListener('click',()=> scrollByOne(+1));
-
     }
 
     function scrollByOne(dir = +1) {
