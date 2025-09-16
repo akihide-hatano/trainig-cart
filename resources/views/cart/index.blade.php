@@ -11,12 +11,7 @@
             <div class="p-6 text-gray-900">
 
           {{-- フラッシュメッセージ --}}
-            @if(session('success'))
-                <div class="bg-green-100 text-green-700 p-3 rounded-lg mb-4">{{ session('success') }}</div>
-            @endif
-            @if(session('error'))
-                <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4">{{ session('error') }}</div>
-            @endif
+            <x-flash.message />
 
           {{-- 空カート --}}
             @if($items->isEmpty())
