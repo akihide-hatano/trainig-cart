@@ -29,9 +29,6 @@ class CartItemController extends Controller
         foreach($items as $i){
             $total += (int)$i->product->price * (int)$i->quantity;
         }
-
-       dd($items->pluck('product.image_url'));
-
         return view('cart.index', compact('items', 'total','products'));
     }
 
