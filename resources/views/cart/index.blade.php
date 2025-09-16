@@ -18,7 +18,7 @@
                 <div class="text-center p-8 border-2 border-dashed border-gray-300 rounded-xl">
                 <p class="text-gray-600 mb-2">カートに商品がありません。</p>
                 <a href="{{ route('products.index') }}"
-                     class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
+                      class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
                     商品一覧へ
                 </a>
                 </div>
@@ -29,9 +29,8 @@
                 <article class="flex gap-4 p-3 border border-gray-200 rounded-xl">
                   {{-- 画像 --}}
                   <div class="flex-shrink-0 w-24 h-24 md:w-20 md:h-20">
-                    <img src="{{ $item->product->image_url ?? '' }}"
-                         alt="{{ $item->product->name }}"
-                         class="w-full h-full object-cover rounded-lg bg-gray-100">
+                    <img src="{{ $item->product->image_url ?? '' }}" alt="{{ $item->product->name }}"
+                        class="w-full h-full object-cover rounded-lg bg-gray-100">
                   </div>
 
                   {{-- 本文 --}}
@@ -40,7 +39,6 @@
                     <div class="text-gray-600 text-sm">
                       単価：{{ number_format((int)$item->product->price) }} 円
                     </div>
-
                     {{-- 数量ステッパー（0で削除扱い） --}}
                     <form method="POST"
                           action="{{ route('cart.items.update', $item) }}"
@@ -51,9 +49,8 @@
                               class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300 text-gray-800 font-bold js-dec"
                               aria-label="数量を減らす">−</button>
 
-                      <input type="number" name="quantity"
-                             value="{{ $item->quantity }}" min="0" max="99"
-                             class="w-16 text-center border-gray-300 rounded-md shadow-sm">
+                      <input type="number" name="quantity" value="{{ $item->quantity }}" min="0" max="99"
+                            class="w-16 text-center border-gray-300 rounded-md shadow-sm">
 
                       <button type="button"
                               class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full hover:bg-gray-300 text-gray-800 font-bold js-inc"
@@ -64,7 +61,6 @@
                         更新
                       </button>
                     </form>
-
                     {{-- 削除 --}}
                     <form method="POST" action="{{ route('cart.items.destroy', $item) }}" class="mt-2">
                       @csrf @method('DELETE')
@@ -73,7 +69,6 @@
                       </button>
                     </form>
                   </div>
-
                   {{-- 小計 --}}
                   <div class="flex-shrink-0 text-right">
                     <div class="text-gray-600 text-sm">小計</div>
@@ -89,7 +84,7 @@
             <div class="flex justify-end items-center gap-4 mt-8 sticky bottom-0 bg-white p-4 border-t border-gray-200">
               <div class="text-xl font-bold">合計：{{ number_format($total) }} 円</div>
               <a href=""
-                 class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
+                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition">
                 買い物を続ける
               </a>
 
