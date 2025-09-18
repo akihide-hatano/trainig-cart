@@ -21,16 +21,16 @@ class DashboardController extends Controller
         $todayPaid = (clone $query)->where('status','paid')->get();
         $todayPending = (clone $query)->where('status','pending')->get();
 
-        // dd() と違って、両方の結果をまとめて出力
-        dump($todayPaid);
-        dump($todayPending);
+        // トップに流す商品（新着12件）
+        $newProducts = Product::latest()->limit(12)->get();
 
+        //userの購入したitemをwithでとる
         $recentOrders = Order::withCount('items')
                         ->where('user_id',$user->id)
                         ->latest()
                         ->limit(5)
                         ->get();
-        return view('dashboard',compact('todayPaid','todayPending','recentOrders'));
+        return view('dashboard',compact('user','newProducts','todayPaid','todayPending','recentOrders'));
 
     }
 
