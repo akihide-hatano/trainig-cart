@@ -126,5 +126,5 @@
       </section>
     </div>
   </div>
-@vite('resources/js/dashboard.js')
+{{-- @vite('resources/js/dashboard.js') --}}
 </x-app-layout>
