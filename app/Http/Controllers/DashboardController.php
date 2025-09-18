@@ -11,29 +11,19 @@ class DashboardController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        // 今日の「支払い済み」「保留」注文
+        //今日の支払いと保留について
         $today = now()->startOfDay();
-        $todayPaid    = Order::where('user_id', $user->id)->where('status','paid')->where('placed_at','>=',$today)->latest('placed_at')->get();
-        $todayPending = Order::where('user_id', $user->id)->where('status','pending')->where('placed_at','>=',$today)->latest('placed_at')->get();
-        // 最近の購入履歴（直近5件）
-        $recentOrders = Order::withCount('items')
-            ->where('user_id', $user->id)
-            ->latest('placed_at')
-            ->limit(5)
-            ->get();
 
-        // トップに流す商品（新着12件）
-        $newProducts = Product::latest()->limit(12)->get();
+        $query = Order::where('user_id',$user->id)
+                ->where('placed_at','>=',$today)
+                ->lateset('placed_at');
 
-    // dd([
-    //     'user'         => $user,
-    //     'todayPaid'    => $todayPaid,
-    //     'todayPending' => $todayPending,
-    //     'recentOrders' => $recentOrders,
-    //     'newProducts'  => $newProducts,
-    // ]);
+        $todayPaid = (clone $query)->where('status','paid')->get();
+        $todayPending = (clone $query)->where('status','pending')->get();
 
-        return view('dashboard', compact('user','todayPaid','todayPending','recentOrders','newProducts'));
+        // dd() と違って、両方の結果をまとめて出力
+        dump($todayPaid);
+        dump($todayPending);
     }
 
 }
