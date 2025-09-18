@@ -24,6 +24,14 @@ class DashboardController extends Controller
         // dd() と違って、両方の結果をまとめて出力
         dump($todayPaid);
         dump($todayPending);
+
+        $recentOrders = Order::withCount('items')
+                        ->where('user_id',$user->id)
+                        ->latest()
+                        ->limit(5)
+                        ->get();
+        return view('dashboard',compact('todayPaid','todayPending','recentOrders'));
+
     }
 
 }
