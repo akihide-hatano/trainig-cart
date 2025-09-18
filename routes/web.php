@@ -27,12 +27,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // 💡 CartItemのルーティングをすべて定義
-    Route::get('/cart', [CartItemController::class, 'index'])->name('cart.index');
-    Route::get('/cart/{item}', [CartItemController::class, 'show'])->name('cart.show');
-    Route::get('/cart/{item}/edit', [CartItemController::class, 'edit'])->name('cart.edit');
     Route::post('/cart/items', [CartItemController::class, 'store'])->name('cart.items.store');
     Route::patch('/cart/items/{item}', [CartItemController::class, 'update'])->name('cart.items.update');
     Route::delete('/cart/items/{item}', [CartItemController::class, 'destroy'])->name('cart.items.destroy');
+    // **汎用的なパスを後に記述**
+    Route::get('/cart', [CartItemController::class, 'index'])->name('cart.index');
+    Route::get('/cart/{item}', [CartItemController::class, 'show'])->name('cart.show');
+    Route::get('/cart/{item}/edit', [CartItemController::class, 'edit'])->name('cart.edit');
 
     // index / create / store / show / edit / update / destroy
     Route::get   ('/products',              [ProductController::class, 'index'])->name('products.index');

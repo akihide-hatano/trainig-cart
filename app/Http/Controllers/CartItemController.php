@@ -81,7 +81,7 @@ public function store(Request $request)
 
     $item->update(['quantity' => $newQuantity]);
 
-    return back()->with('success', '商品をカートに追加しました。');
+    return redirect()->route('cart.index')->with('success', '商品をカートに追加しました。');
 }
 
     /**
