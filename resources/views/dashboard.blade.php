@@ -100,14 +100,14 @@
 
                 <div class="mt-3 flex gap-2">
                     <a href="{{ route('products.show', $p) }}"
-                        class="flex-1 text-center px-3 py-2 rounded border hover:bg-gray-50">
+                        class="flex-1 text-center px-3 py-2 rounded border bg-gray-400 hover:bg-gray-200">
                     詳細
                     </a>
                     <form action="{{ route('cart.items.store') }}" method="POST" class="flex-1">
                       @csrf
                       <input type="hidden" name="product_id" value="{{ $p->id }}">
-                      <button class="w-full px-3 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-700">
-                        カート
+                      <button class="w-full px-3 py-2 rounded bg-indigo-600 text-white hover:bg-indigo-500">
+                        カート追加
                       </button>
                     </form>
                   </div>
