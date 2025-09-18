@@ -16,7 +16,7 @@ class DashboardController extends Controller
 
         $query = Order::where('user_id',$user->id)
                 ->where('placed_at','>=',$today)
-                ->lateset('placed_at');
+                ->latest('placed_at');
 
         $todayPaid = (clone $query)->where('status','paid')->get();
         $todayPending = (clone $query)->where('status','pending')->get();
